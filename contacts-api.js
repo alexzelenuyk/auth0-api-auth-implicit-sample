@@ -20,14 +20,14 @@ app.use(jwt({
     rateLimit: true,
     jwksRequestsPerMinute: 5,
     // Replace with your Auth0 Domain
-    jwksUri: `https://YOUR_AUTH0_DOMAIN/.well-known/jwks.json`
+    jwksUri: `https://${domain}/.well-known/jwks.json`
   }),
 
 
   // Validate the audience and the issuer
   audience: 'organize',
   // Replace with your Auth0 Domain
-  issuer: `https://YOUR_AUTH0_DOMAIN/`,
+  issuer: `https://${domain}/`,
   algorithms: [ 'RS256' ]
 }));
 

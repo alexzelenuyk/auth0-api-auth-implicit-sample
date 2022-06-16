@@ -5,9 +5,16 @@
     <title>Single Page Application</title>
   </head>
   <body>
-    <!-- Edit this URL to reflect your domain, Auth0 Client ID, and the port you're using -->
-    <a href="https://YOUR_AUTH0_DOMAIN/authorize?scope=read:contacts%20read:calendar&audience=organize&response_type=id_token%20token&client_id=YOUR_CLIENT_ID&redirect_uri=http://localhost:3000&nonce=NONCE">
-      Sign In
+    <!-- Access for more scope -->
+    <a href="https://dev-g01yaoqo.eu.auth0.com/authorize?scope=read:contacts%20read:calendar%20foo:bar:baz&audience=organize&response_type=id_token%20token&client_id=oKymG2Y3xYrHBbwcNF80hnDPcvXhWnMC&redirect_uri=http://localhost:3000&nonce=NONCE">
+      Sign In with more scope
+    </a>
+    <br />
+    <br />
+    <br />
+    <!-- Access only allowed scope -->
+    <a href="https://dev-g01yaoqo.eu.auth0.com/authorize?scope=read:contacts&audience=organize&response_type=id_token%20token&client_id=oKymG2Y3xYrHBbwcNF80hnDPcvXhWnMC&redirect_uri=http://localhost:3000&nonce=NONCE">
+      Sign In with allowed scopes
     </a>
 
     <div id="app" style="display:none;">
@@ -41,9 +48,9 @@
 
       console.log('Your access token is ' + access_token)
 
-      
+
       // Use the access token to make API calls
-      
+
       $('#get-contacts').on('click', function(e) {
         e.preventDefault();
 
@@ -57,7 +64,7 @@
           }
         });
       });
-      
+
       $('#get-appointments').on('click', function(e) {
         e.preventDefault();
 
@@ -69,7 +76,10 @@
           headers: { "Authorization": "Bearer " + access_token },
           success: function (data) {
             $('#results pre').text(JSON.stringify(data, null, 2))
-          }
+          },
+          error: function(data) {
+            $('#results pre').text("Failed to request appointments, status: " + data.status)
+          },
         });
       });
 
